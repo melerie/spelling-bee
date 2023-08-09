@@ -1,10 +1,9 @@
-import { Footer } from './components/Footer'
-import { Hexagons } from './components/Hexagons'
-import { Header } from './components/Header'
 import { styled } from 'styled-components'
-import { GlobalStyle } from './globalStyles'
 
-export const Page = () => (
+import { GlobalStyle } from '../globalStyles'
+import { Footer, Header, Hexagons } from '../components'
+
+export const Main = () => (
   <Container>
     <GlobalStyle />
     <Header />
