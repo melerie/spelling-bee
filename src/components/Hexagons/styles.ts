@@ -1,3 +1,4 @@
+import { darken } from 'polished'
 import { css, styled } from 'styled-components'
 
 export const HexagonContainer = styled.div`
@@ -52,23 +53,24 @@ const buttonHoverStyle = css`
   }
 
   &:hover {
-    &::before {
-      box-shadow: inset 0 0 0 ${buttonHoverWidth}em #dcdcdc;
-    }
+    background-color: ${({ theme }) => darken(0.05, theme.lightGrey)};
   }
 `
 
 export const HexagonButton = styled.button`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  overflow: hidden;
-  transform: skewY(-30deg) rotate3d(0, 0, 1, 60deg);
-  background-color: #e6e6e6;
-  pointer-events: all;
+  ${({ theme }) => css`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    overflow: hidden;
+    transform: skewY(-30deg) rotate3d(0, 0, 1, 60deg);
+    background-color: ${theme.lightGrey};
+    pointer-events: all;
+    transition: background-color 0.15s ease-out;
 
-  ${buttonHoverStyle}
+    ${buttonHoverStyle}
+  `}
 `
 
 export const HexagonContent = styled.span`
@@ -79,34 +81,47 @@ export const HexagonContent = styled.span`
   transform: translateX(-50%);
   pointer-events: none;
 
+  &:nth-child(4) {
+    color: ${({ theme }) => theme.white};
+  }
+
   font-weight: bold;
+  font-size: 1.2rem;
 `
 
 export const Container = styled.div`
-  display: grid;
-  grid-gap: 6px;
-  max-width: 250px;
-  width: 100%;
-  margin: 0 auto;
-  grid-template-columns: repeat(6, 2fr);
-  padding-bottom: 5.4%;
+  ${({ theme }) => css`
+    display: grid;
+    grid-gap: 6px;
+    max-width: 250px;
+    width: 100%;
+    margin: 0 auto;
+    grid-template-columns: repeat(6, 2fr);
+    padding-bottom: 5.4%;
 
-  ${HexagonContainer}:nth-child(5n+1) {
-    grid-column-start: 2;
-  }
+    ${HexagonContainer}:nth-child(5n+1) {
+      grid-column-start: 2;
+    }
 
-  ${HexagonContainer}:nth-child(5n+3) {
-    grid-column-start: 1;
-  }
+    ${HexagonContainer}:nth-child(5n+3) {
+      grid-column-start: 1;
+    }
 
-  ${HexagonContainer}:nth-child(4) {
-    ${HexagonButton} {
-      background-color: #6acaf3;
+    ${HexagonContainer}:nth-child(4) {
+      ${HexagonButton} {
+        background-color: ${theme.primary};
+      }
       &:hover {
-        &::before {
-          box-shadow: inset 0 0 0 ${buttonHoverWidth}em #64c0e7;
+        ${HexagonButton} {
+          background-color: ${theme.dark};
+        }
+      }
+
+      &:hover {
+        ${HexagonContent} {
+          color: ${theme.white};
         }
       }
     }
-  }
+  `}
 `
