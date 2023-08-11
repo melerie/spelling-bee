@@ -17,6 +17,7 @@ ${({ theme }) => css`
   body {
     font-family: 'Poppins', sans-serif;
     color: ${theme.textColour};
+    line-height: 1.6;
   }
 
   body {

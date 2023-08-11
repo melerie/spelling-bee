@@ -1,19 +1,41 @@
 import { styled } from 'styled-components'
 
-import { Button, Hexagons, Shuffle } from '../components'
+import { useState } from 'react'
 
-export const Main = () => (
-  <>
-    <Hexagons />
-    <Inline>
-      <Button>Enter</Button>
-      <RoundButton>
-        <Shuffle />
-      </RoundButton>
-      <Button>Delete</Button>
-    </Inline>
-  </>
-)
+import { Button, Hexagons, Shuffle, SpellingInput } from '../components'
+
+export const Main = () => {
+  const [inputLetters, setInputLetters] = useState<string>()
+
+  const handleDelete = () => {
+    setInputLetters((letters) => letters && letters.slice(0, -1))
+  }
+
+  return (
+    <Container>
+      <SpellingInput letters={inputLetters} centerLetter="3" />
+      <Hexagons setInputLetters={setInputLetters} />
+      <Inline>
+        <Button>Enter</Button>
+        <RoundButton>
+          <Shuffle />
+        </RoundButton>
+        <Button onClick={handleDelete}>Delete</Button>
+      </Inline>
+    </Container>
+  )
+}
+
+const Container = styled.main`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 20px;
+
+  width: 100%;
+  padding: 20px;
+  max-width: 1400px;
+`
 
 const Inline = styled.div`
   display: flex;

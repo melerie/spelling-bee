@@ -90,14 +90,18 @@ export const HexagonContent = styled.span`
 `
 
 export const Container = styled.div`
+  max-width: 250px;
+  margin: 0 auto;
+  width: 100%;
+`
+
+export const HexagonsContainer = styled.div`
   ${({ theme }) => css`
     display: grid;
     grid-gap: 6px;
-    max-width: 250px;
     width: 100%;
-    margin: 0 auto;
     grid-template-columns: repeat(6, 2fr);
-    padding-bottom: 5.4%;
+    padding-bottom: 10%;
 
     ${HexagonContainer}:nth-child(5n+1) {
       grid-column-start: 2;
