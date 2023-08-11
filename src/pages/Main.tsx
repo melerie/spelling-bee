@@ -1,12 +1,9 @@
 import { styled } from 'styled-components'
 
-import { GlobalStyle } from '../globalStyles'
-import { Button, Footer, Header, Hexagons, Shuffle } from '../components'
+import { Button, Hexagons, Shuffle } from '../components'
 
 export const Main = () => (
-  <Container>
-    <GlobalStyle />
-    <Header />
+  <>
     <Hexagons />
     <Inline>
       <Button>Enter</Button>
@@ -15,18 +12,8 @@ export const Main = () => (
       </RoundButton>
       <Button>Delete</Button>
     </Inline>
-    <Footer />
-  </Container>
+  </>
 )
-
-const Container = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  min-height: 100vh;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-`
 
 const Inline = styled.div`
   display: flex;

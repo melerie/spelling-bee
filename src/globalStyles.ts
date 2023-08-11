@@ -1,13 +1,22 @@
-import { createGlobalStyle } from 'styled-components';
+import { lighten } from 'polished'
+import { createGlobalStyle, css } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
-  body, h1, h2, h3, p, ul, li {
+${({ theme }) => css`
+  body,
+  h1,
+  h2,
+  h3,
+  p,
+  ul,
+  li {
     margin: 0;
     padding: 0;
   }
 
   body {
     font-family: 'Poppins', sans-serif;
+    color: ${theme.textColour};
   }
 
   body {
@@ -16,6 +25,23 @@ export const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
+  }
+
+  a {
+    text-decoration: none;
+    box-shadow: inset 0 -0.25em 0 ${lighten(0.1, theme.primary)};
+
+    transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
+
+    &,
+    &:visited {
+      color: ${theme.textColour};
+    }
+
+    &:hover,
+    &:focus {
+      background-color: ${lighten(0.1, theme.primary)};
+    }
   }
 
   button {
@@ -27,5 +53,18 @@ export const GlobalStyle = createGlobalStyle`
       outline: 0;
     }
   }
-`;
 
+  h1 {
+    font-size: 1.6rem;
+  }
+  h2 {
+    font-size: 1.45rem;
+  }
+  h3 {
+    font-size: 1.3rem;
+  }
+  h4 {
+    font-size: 1.15rem;
+  }
+`}
+`
