@@ -4,22 +4,25 @@ import { Main } from './pages/Main'
 import { theme } from './theme'
 import { GlobalStyle } from './globalStyles'
 import { Footer, Header } from './components'
+import { useFetchData } from './hooks'
 
-const App = () => {
+export const App = () => {
+  const { data, error, loading } = useFetchData({ url: '/words.json', skip: true })
+  console.log(data)
+  console.log(error)
+  console.log(loading)
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Container>
         <Header />
-
         <Main />
         <Footer />
       </Container>
     </ThemeProvider>
   )
 }
-
-export default App
 
 const Container = styled.div`
   display: flex;
