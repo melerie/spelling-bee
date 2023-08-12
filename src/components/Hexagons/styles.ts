@@ -12,7 +12,7 @@ export const HexagonContainer = styled.div`
   }
 `
 
-export const HexagonButtonWrapper = styled.div<{ isMouseDown: boolean }>`
+export const HexagonButtonWrapper = styled.div<{ $isMouseDown: boolean }>`
   position: absolute;
   width: 100%;
   // The padding-bottom value indicates the ratio of the height to the width
@@ -22,8 +22,8 @@ export const HexagonButtonWrapper = styled.div<{ isMouseDown: boolean }>`
   pointer-events: none;
   transition: all 0.15s ease-out;
 
-  ${({ isMouseDown }) =>
-    isMouseDown &&
+  ${({ $isMouseDown }) =>
+    $isMouseDown &&
     css`
       transform: rotate3d(0, 0, 1, -60deg) skewY(30deg) scale3d(0.86, 0.86, 1);
     `}

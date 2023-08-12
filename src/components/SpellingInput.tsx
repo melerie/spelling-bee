@@ -20,7 +20,7 @@ export const SpellingInput = ({ letters, centerLetter }: Props) => {
             return letter
           })}
       </InputText>
-      <Cursor isLetterUndefined={isLetterUndefined} />
+      <Cursor $isLetterUndefined={isLetterUndefined} />
       {isLetterUndefined && <Placeholder>Type or click</Placeholder>}
     </Container>
   )
@@ -58,15 +58,15 @@ const CenterLetter = styled.span`
   `}
 `
 
-const Cursor = styled.span<{ isLetterUndefined: boolean }>`
-  ${({ theme, isLetterUndefined }) => css`
+const Cursor = styled.span<{ $isLetterUndefined: boolean }>`
+  ${({ theme, $isLetterUndefined }) => css`
     display: inline-block;
     width: 0.15em;
     height: 1.2em;
     background: ${theme.primary};
     animation: 1000ms ${blink} step-end infinite;
 
-    ${isLetterUndefined
+    ${$isLetterUndefined
       ? css`
           margin-right: 0.2em;
         `

@@ -11,7 +11,11 @@ export const Hexagons = ({ setInputLetters }: Props) => {
     <Container>
       <HexagonsContainer>
         {[...Array(7)].map((_, i) => {
-          return <Hexagon onClick={() => setInputLetters((letters = '') => letters + i)}>{i}</Hexagon>
+          return (
+            <Hexagon key={`hexagon-${i}`} onClick={() => setInputLetters((letters = '') => letters + i)}>
+              {i}
+            </Hexagon>
+          )
         })}
       </HexagonsContainer>
     </Container>

@@ -22,7 +22,7 @@ export const Button = ({ onClick, children, className }: Props) => {
   }
 
   return (
-    <ButtonStyled className={className} onClick={handleClick} isAnimating={isAnimating}>
+    <ButtonStyled className={className} onClick={handleClick} $isAnimating={isAnimating}>
       {children}
     </ButtonStyled>
   )
@@ -48,8 +48,8 @@ const bottomBubbles = keyframes`
   }
 `
 
-export const ButtonStyled = styled.button<{ isAnimating: boolean }>`
-  ${({ theme, isAnimating }) => css`
+export const ButtonStyled = styled.button<{ $isAnimating: boolean }>`
+  ${({ theme, $isAnimating }) => css`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -106,7 +106,7 @@ export const ButtonStyled = styled.button<{ isAnimating: boolean }>`
       transform: scale(0.95);
     }
 
-    ${isAnimating && isAnimatingStyles}
+    ${$isAnimating && isAnimatingStyles}
   `}
 `
 

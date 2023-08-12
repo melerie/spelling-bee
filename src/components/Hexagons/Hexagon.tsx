@@ -12,7 +12,7 @@ export const Hexagon = ({ children, onClick }: Props) => {
 
   return (
     <HexagonContainer>
-      <HexagonButtonWrapper isMouseDown={isMouseDown}>
+      <HexagonButtonWrapper $isMouseDown={isMouseDown}>
         <HexagonButton
           onMouseDown={() => setIsMouseDown(true)}
           onMouseUp={() => setIsMouseDown(false)}
