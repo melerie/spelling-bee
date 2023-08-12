@@ -7,8 +7,8 @@ type Props = {
   skip?: boolean
 }
 
-export const useFetchData = ({ url, skip = false }: Props) => {
-  const [data, setData] = useState<Data>()
+export const useFetchData = <T extends Data>({ url, skip = false }: Props) => {
+  const [data, setData] = useState<T>()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error>()
 
@@ -25,7 +25,7 @@ export const useFetchData = ({ url, skip = false }: Props) => {
 
       try {
         const response = await fetch(url)
-        const jsonData: Data = await response.json()
+        const jsonData: T = await response.json()
         console.log('run once')
         setData(jsonData)
       } catch (err) {

@@ -6,7 +6,8 @@ import { theme } from './theme'
 import { GlobalStyle } from './globalStyles'
 import { Footer, Header } from './components'
 import { useFetchData, useLocalStorage } from './hooks'
-import { SpellingBeeValues } from './types'
+import { SpellingBeeValues, WordsList } from './types'
+import { getHiveGameData } from './utils'
 
 type ContentProps = {
   error: Error | undefined
@@ -16,16 +17,21 @@ type ContentProps = {
 
 export const App = () => {
   const { storedValue, setLocalStorageValue } = useLocalStorage<SpellingBeeValues>({ key: 'spellingBee' })
-  const { data, error, loading } = useFetchData({ url: '/words.json', skip: !!storedValue })
+  const { data, error, loading } = useFetchData<WordsList>({ url: '/words.json', skip: !!storedValue })
 
   const { hiveLetters, centerLetter } = storedValue || {}
 
   useEffect(() => {
-    if (data) {
-      // TODO: get the hiveLetters from the data
-      setLocalStorageValue({ hiveLetters: 'abcefg', centerLetter: 'd' })
+    if (!data) {
+      return
     }
-  }, [data, setLocalStorageValue])
+
+    const gameData = getHiveGameData(data)
+    setLocalStorageValue(gameData)
+
+    // We only want to run this once, when the data is loaded
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
 
   return (
     <ThemeProvider theme={theme}>
