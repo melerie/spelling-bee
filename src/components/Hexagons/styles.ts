@@ -87,6 +87,7 @@ export const HexagonContent = styled.span`
 
   font-weight: bold;
   font-size: 1.2rem;
+  text-transform: uppercase;
 `
 
 export const Container = styled.div`

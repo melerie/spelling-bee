@@ -2,31 +2,46 @@ import { useState } from 'react'
 import { styled } from 'styled-components'
 
 import { Button, Hexagons, Shuffle, SpellingInput } from '../components'
+import { SpellingBeeValues } from '../types'
+import { StorageValue, StorageValueFunction } from '../hooks'
 
 type Props = {
   hiveLetters: string | undefined
+  centerLetter: string | undefined
+  setLocalStorageValue: (value: StorageValue<SpellingBeeValues> | StorageValueFunction<SpellingBeeValues>) => void
 }
 
-export const Main = ({ hiveLetters }: Props) => {
+export const Main = ({ hiveLetters, centerLetter, setLocalStorageValue }: Props) => {
   const [inputLetters, setInputLetters] = useState<string>()
 
-  if (!hiveLetters) {
+  if (!hiveLetters || !centerLetter) {
     return <p>Error loading app</p>
   }
-
-  const centerLetter = hiveLetters[3]
 
   const handleDelete = () => {
     setInputLetters((letters) => letters && letters.slice(0, -1))
   }
 
+  const handleShuffle = () => {
+    setLocalStorageValue((value) => {
+      if (!value) return
+      return {
+        ...value,
+        hiveLetters: value.hiveLetters
+          .split('')
+          .sort(() => Math.random() - 0.5)
+          .join(''),
+      }
+    })
+  }
+
   return (
     <Container>
       <SpellingInput letters={inputLetters} centerLetter={centerLetter} />
-      <Hexagons setInputLetters={setInputLetters} hiveLetters={hiveLetters} />
+      <Hexagons setInputLetters={setInputLetters} hiveLetters={hiveLetters} centerLetter={centerLetter} />
       <Inline>
         <Button>Enter</Button>
-        <RoundButton>
+        <RoundButton onClick={handleShuffle}>
           <Shuffle />
         </RoundButton>
         <Button onClick={handleDelete}>Delete</Button>
