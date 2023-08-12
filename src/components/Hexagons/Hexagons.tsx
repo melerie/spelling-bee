@@ -4,16 +4,20 @@ import { Container, HexagonsContainer } from './styles'
 
 type Props = {
   setInputLetters: Dispatch<SetStateAction<string | undefined>>
+  hiveLetters: string
 }
 
-export const Hexagons = ({ setInputLetters }: Props) => {
+export const Hexagons = ({ setInputLetters, hiveLetters }: Props) => {
   return (
     <Container>
       <HexagonsContainer>
-        {[...Array(7)].map((_, i) => {
+        {Array.from(hiveLetters).map((hiveLetter) => {
           return (
-            <Hexagon key={`hexagon-${i}`} onClick={() => setInputLetters((letters = '') => letters + i)}>
-              {i}
+            <Hexagon
+              key={`hexagon-${hiveLetter}`}
+              onClick={() => setInputLetters((letters = '') => letters + hiveLetter)}
+            >
+              {hiveLetter}
             </Hexagon>
           )
         })}

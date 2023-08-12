@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 import { lighten } from 'polished'
 
@@ -13,11 +14,12 @@ export const SpellingInput = ({ letters, centerLetter }: Props) => {
     <Container>
       <InputText>
         {!isLetterUndefined &&
-          Array.from(letters.toUpperCase()).map((letter) => {
+          Array.from(letters.toUpperCase()).map((letter, i) => {
+            const arrayKey = `${letter}-${i}`
             if (letter === centerLetter.toUpperCase()) {
-              return <CenterLetter>{letter}</CenterLetter>
+              return <CenterLetter key={arrayKey}>{letter}</CenterLetter>
             }
-            return letter
+            return <Fragment key={arrayKey}>{letter}</Fragment>
           })}
       </InputText>
       <Cursor $isLetterUndefined={isLetterUndefined} />

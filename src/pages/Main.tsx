@@ -3,8 +3,18 @@ import { styled } from 'styled-components'
 
 import { Button, Hexagons, Shuffle, SpellingInput } from '../components'
 
-export const Main = () => {
+type Props = {
+  hiveLetters: string | undefined
+}
+
+export const Main = ({ hiveLetters }: Props) => {
   const [inputLetters, setInputLetters] = useState<string>()
+
+  if (!hiveLetters) {
+    return <p>Error loading app</p>
+  }
+
+  const centerLetter = hiveLetters[3]
 
   const handleDelete = () => {
     setInputLetters((letters) => letters && letters.slice(0, -1))
@@ -12,8 +22,8 @@ export const Main = () => {
 
   return (
     <Container>
-      <SpellingInput letters={inputLetters} centerLetter="3" />
-      <Hexagons setInputLetters={setInputLetters} />
+      <SpellingInput letters={inputLetters} centerLetter={centerLetter} />
+      <Hexagons setInputLetters={setInputLetters} hiveLetters={hiveLetters} />
       <Inline>
         <Button>Enter</Button>
         <RoundButton>
