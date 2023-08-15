@@ -52,6 +52,7 @@ const InputText = styled.span`
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  text-align: center;
 `
 
 const CenterLetter = styled.span`
@@ -80,4 +81,5 @@ const Cursor = styled.span<{ $isLetterUndefined: boolean }>`
 
 const Placeholder = styled.span`
   color: ${({ theme }) => lighten(0.2, theme.textColour)};
+  text-align: center;
 `

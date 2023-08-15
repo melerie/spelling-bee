@@ -1,4 +1,4 @@
-import { WordsList } from '../../types'
+import { WordsList } from '../types'
 import { getRandomStringFromArray } from './getRandomStringFromArray'
 import { getWordsFromPangram } from './getWordsFromPangram'
 import { getWordsScore } from './getWordsScore'

@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 
-import { Main } from './pages/Main'
+import { Game } from './modules/Game'
 import { theme } from './theme'
 import { GlobalStyle } from './globalStyles'
 import { Footer, Header } from './components'
@@ -39,7 +39,7 @@ export const App = () => {
       <Container>
         <Header />
         <Content error={error} loading={loading}>
-          <Main hiveLetters={hiveLetters} centerLetter={centerLetter} setLocalStorageValue={setLocalStorageValue} />
+          <Game hiveLetters={hiveLetters} centerLetter={centerLetter} setLocalStorageValue={setLocalStorageValue} />
         </Content>
         <Footer />
       </Container>

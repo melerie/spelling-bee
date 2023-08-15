@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { styled } from 'styled-components'
 
-import { Button, Hexagons, Shuffle, SpellingInput } from '../components'
-import { SpellingBeeValues } from '../types'
-import { StorageValue, StorageValueFunction } from '../hooks'
+import { StorageValue, StorageValueFunction } from '../../hooks'
+import { Hexagons, Shuffle, SpellingInput } from './components'
+import { Button } from '../../components'
+import { SpellingBeeValues } from '../../types'
 
 type Props = {
   hiveLetters: string | undefined
@@ -11,7 +12,7 @@ type Props = {
   setLocalStorageValue: (value: StorageValue<SpellingBeeValues> | StorageValueFunction<SpellingBeeValues>) => void
 }
 
-export const Main = ({ hiveLetters, centerLetter, setLocalStorageValue }: Props) => {
+export const Game = ({ hiveLetters, centerLetter, setLocalStorageValue }: Props) => {
   const [inputLetters, setInputLetters] = useState<string>()
 
   if (!hiveLetters || !centerLetter) {
@@ -19,7 +20,7 @@ export const Main = ({ hiveLetters, centerLetter, setLocalStorageValue }: Props)
   }
 
   const handleDelete = () => {
-    setInputLetters((letters) => letters && letters.slice(0, -1))
+    setInputLetters((letters) => letters?.slice(0, -1))
   }
 
   const handleShuffle = () => {
@@ -40,11 +41,11 @@ export const Main = ({ hiveLetters, centerLetter, setLocalStorageValue }: Props)
       <SpellingInput letters={inputLetters} centerLetter={centerLetter} />
       <Hexagons setInputLetters={setInputLetters} hiveLetters={hiveLetters} centerLetter={centerLetter} />
       <Inline>
-        <Button>Enter</Button>
+        <Button onClick={handleDelete}>Delete</Button>
         <RoundButton onClick={handleShuffle}>
           <Shuffle />
         </RoundButton>
-        <Button onClick={handleDelete}>Delete</Button>
+        <Button>Enter</Button>
       </Inline>
     </Container>
   )
@@ -64,6 +65,7 @@ const Container = styled.main`
 const Inline = styled.div`
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
   gap: 1rem;
 `
 

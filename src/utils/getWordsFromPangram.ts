@@ -1,4 +1,4 @@
-import { WordsList } from '../../types'
+import { WordsList } from '../types'
 
 export const getWordsFromPangram = (pangram: string, centerLetter: string, data: WordsList) => {
   const pangramLetters = pangram.split('')

@@ -1,6 +1,3 @@
-export * from './Hexagons'
 export * from './Footer'
 export * from './Header'
 export * from './Button'
-export * from './Shuffle'
-export * from './SpellingInput'

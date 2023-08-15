@@ -1,1 +1,1 @@
-export * from './getHiveGameData/getHiveGameData'
+export * from './getHiveGameData'
