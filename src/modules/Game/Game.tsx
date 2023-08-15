@@ -5,19 +5,23 @@ import { StorageValue, StorageValueFunction } from '../../hooks'
 import { Hexagons, Shuffle, SpellingInput } from './components'
 import { Button } from '../../components'
 import { SpellingBeeValues } from '../../types'
+import { verifySubmittedValue } from './verifySubmittedValue'
+import { useToast } from './useToast'
 
 type Props = {
-  hiveLetters: string | undefined
-  centerLetter: string | undefined
+  storedValue: SpellingBeeValues | undefined
   setLocalStorageValue: (value: StorageValue<SpellingBeeValues> | StorageValueFunction<SpellingBeeValues>) => void
 }
 
-export const Game = ({ hiveLetters, centerLetter, setLocalStorageValue }: Props) => {
+export const Game = ({ storedValue, setLocalStorageValue }: Props) => {
   const [inputLetters, setInputLetters] = useState<string>()
+  const { setToast, Toast } = useToast()
 
-  if (!hiveLetters || !centerLetter) {
+  if (!storedValue) {
     return <p>Error loading app</p>
   }
+
+  const { hiveLetters, centerLetter, answersWithScore, foundAnswers } = storedValue
 
   const handleDelete = () => {
     setInputLetters((letters) => letters?.slice(0, -1))
@@ -36,8 +40,45 @@ export const Game = ({ hiveLetters, centerLetter, setLocalStorageValue }: Props)
     })
   }
 
+  const handleSubmit = () => {
+    const valueValidation = verifySubmittedValue(inputLetters, centerLetter)
+
+    if (valueValidation.error) {
+      setToast({ message: valueValidation.error })
+      setInputLetters('')
+      return
+    }
+
+    const matchedAnswer = answersWithScore.find((answer) => answer.word === inputLetters)
+
+    if (!matchedAnswer) {
+      setToast({ message: 'Not a valid word!' })
+      setInputLetters('')
+      return
+    }
+
+    const isAlreadyFound = foundAnswers.some((answer) => answer.word === inputLetters)
+
+    if (isAlreadyFound) {
+      setToast({ message: 'Word already found!' })
+      setInputLetters('')
+      return
+    }
+
+    setLocalStorageValue((value) => {
+      if (!value) return
+      return {
+        ...value,
+        foundAnswers: [...value.foundAnswers, matchedAnswer],
+      }
+    })
+    setToast({ message: 'Awesome!', type: 'success' })
+    setInputLetters('')
+  }
+
   return (
     <Container>
+      {Toast}
       <SpellingInput letters={inputLetters} centerLetter={centerLetter} />
       <Hexagons setInputLetters={setInputLetters} hiveLetters={hiveLetters} centerLetter={centerLetter} />
       <Inline>
@@ -45,7 +86,7 @@ export const Game = ({ hiveLetters, centerLetter, setLocalStorageValue }: Props)
         <RoundButton onClick={handleShuffle}>
           <Shuffle />
         </RoundButton>
-        <Button>Enter</Button>
+        <Button onClick={handleSubmit}>Enter</Button>
       </Inline>
     </Container>
   )

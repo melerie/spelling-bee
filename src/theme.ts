@@ -10,4 +10,6 @@ export const theme = {
   lightGrey: '#e6e6e6',
   white: '#ffffff',
   dark: '#3e474c',
+  error: '#ff0000',
+  success: '#179f48',
 }

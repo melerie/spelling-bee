@@ -8,6 +8,7 @@ export type SpellingBeeValues = {
   hiveLetters: string
   centerLetter: string
   answersWithScore: Answers[]
+  foundAnswers: Answers[]
   numberOfAnswers: number
   totalScore: number
 }

@@ -19,8 +19,6 @@ export const App = () => {
   const { storedValue, setLocalStorageValue } = useLocalStorage<SpellingBeeValues>({ key: 'spellingBee' })
   const { data, error, loading } = useFetchData<WordsList>({ url: '/words.json', skip: !!storedValue })
 
-  const { hiveLetters, centerLetter } = storedValue || {}
-
   useEffect(() => {
     if (!data) {
       return
@@ -39,7 +37,7 @@ export const App = () => {
       <Container>
         <Header />
         <Content error={error} loading={loading}>
-          <Game hiveLetters={hiveLetters} centerLetter={centerLetter} setLocalStorageValue={setLocalStorageValue} />
+          <Game storedValue={storedValue} setLocalStorageValue={setLocalStorageValue} />
         </Content>
         <Footer />
       </Container>

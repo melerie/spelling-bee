@@ -22,6 +22,7 @@ export const getHiveGameData = (data: WordsList) => {
     answersWithScore: wordsWithScore,
     centerLetter,
     totalScore,
+    foundAnswers: [],
   }
 }
 
