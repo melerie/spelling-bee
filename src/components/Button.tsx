@@ -5,9 +5,10 @@ type Props = {
   onClick?: VoidFunction
   children: ReactNode
   className?: string
+  isActive?: boolean
 }
 
-export const Button = ({ onClick, children, className }: Props) => {
+export const Button = ({ onClick, children, className, isActive = false }: Props) => {
   const [isAnimating, setIsAnimating] = useState(false)
   const timer = useRef<NodeJS.Timeout | null>(null)
 
@@ -22,7 +23,7 @@ export const Button = ({ onClick, children, className }: Props) => {
   }
 
   return (
-    <ButtonStyled className={className} onClick={handleClick} $isAnimating={isAnimating}>
+    <ButtonStyled className={className} onClick={handleClick} $isAnimating={isAnimating} $isActive={isActive}>
       {children}
     </ButtonStyled>
   )
@@ -48,8 +49,15 @@ const bottomBubbles = keyframes`
   }
 `
 
-export const ButtonStyled = styled.button<{ $isAnimating: boolean }>`
-  ${({ theme, $isAnimating }) => css`
+const isActiveStyle = css`
+  ${({ theme }) => css`
+    color: ${theme.white};
+    background-color: ${theme.textColour};
+  `}
+`
+
+export const ButtonStyled = styled.button<{ $isAnimating: boolean; $isActive: boolean }>`
+  ${({ theme, $isAnimating, $isActive }) => css`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -64,9 +72,9 @@ export const ButtonStyled = styled.button<{ $isAnimating: boolean }>`
     position: relative;
     transition: transform ease-in 0.1s, background-color ease-in 0.1s;
 
+    ${$isActive && isActiveStyle}
     &:hover {
-      color: ${theme.white};
-      background-color: ${theme.textColour};
+      ${isActiveStyle}
     }
 
     &:before,

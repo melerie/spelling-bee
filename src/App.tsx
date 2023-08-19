@@ -4,10 +4,11 @@ import styled, { ThemeProvider } from 'styled-components'
 import { Game } from './modules/Game'
 import { theme } from './theme'
 import { GlobalStyle } from './globalStyles'
-import { Footer, Header } from './components'
+import { Drawer, Footer, Header } from './components'
 import { useFetchData, useLocalStorage } from './hooks'
 import { SpellingBeeValues, WordsList } from './types'
 import { getHiveGameData } from './utils'
+import { DrawerProvider } from './context'
 
 type ContentProps = {
   error: Error | undefined
@@ -41,6 +42,16 @@ export const App = () => {
         </Content>
         <Footer />
       </Container>
+      <DrawerProvider>
+        <>
+          <Drawer index={0} buttonText="Word list">
+            One
+          </Drawer>
+          <Drawer index={1} buttonText="Reset">
+            Two
+          </Drawer>
+        </>
+      </DrawerProvider>
     </ThemeProvider>
   )
 }
@@ -58,6 +69,8 @@ const Content = ({ error, loading, children }: ContentProps) => {
 }
 
 const Container = styled.div`
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-flow: column nowrap;
   min-height: 100vh;

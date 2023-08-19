@@ -31,7 +31,6 @@ export const useToast = () => {
     () => (
       <Transition nodeRef={errorRef} in={displayToast} timeout={300}>
         {(state) => {
-          console.log(state)
           return (
             <ErrorMessage ref={errorRef} state={state} $type={type}>
               {toastMessage}
