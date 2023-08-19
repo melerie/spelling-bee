@@ -79,10 +79,10 @@ export const Game = ({ storedValue, setLocalStorageValue }: Props) => {
   return (
     <Container>
       {Toast}
-      <SpellingInput letters={inputLetters} centerLetter={centerLetter} />
+      <SpellingInput letters={inputLetters} centerLetter={centerLetter} handleDelete={handleDelete} />
       <Hexagons setInputLetters={setInputLetters} hiveLetters={hiveLetters} centerLetter={centerLetter} />
       <Inline>
-        <Button onClick={handleDelete}>Delete</Button>
+        <Button onClick={() => setInputLetters('')}>Clear</Button>
         <RoundButton onClick={handleShuffle}>
           <Shuffle />
         </RoundButton>

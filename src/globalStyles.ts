@@ -49,6 +49,7 @@ ${({ theme }) => css`
     background: none;
     border: none;
     cursor: pointer;
+    padding: 0;
 
     &:focus {
       outline: 0;
