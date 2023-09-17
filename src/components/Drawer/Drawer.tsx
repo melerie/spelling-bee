@@ -5,14 +5,14 @@ import { useDrawer } from '../../context'
 import { Close } from './Close'
 import { ButtonIcon } from '../ButtonIcon'
 
-type Props = {
+export type DrawerSettings = {
   index: number
   buttonText: string
   title?: string
   children: ReactNode
 }
 
-export const Drawer = ({ index, buttonText, title, children }: Props) => {
+export const Drawer = ({ index, buttonText, title, children }: DrawerSettings) => {
   const { drawerIndex, setDrawerIndex } = useDrawer()
 
   const closeDrawer = () => {
@@ -37,8 +37,10 @@ export const Drawer = ({ index, buttonText, title, children }: Props) => {
           {buttonText}
         </OpenButton>
         <ContentDrawer>
-          {title && <h2>{title}</h2>}
-          <Content>{children}</Content>
+          <Content>
+            {title && <h2>{title}</h2>}
+            {children}
+          </Content>
           <CloseButton onClick={closeDrawer}>
             <Close />
           </CloseButton>
@@ -112,7 +114,10 @@ const ContentDrawer = styled.div`
 `
 
 const Content = styled.div`
+  display: flex;
+  flex-flow: nowrap column;
   padding: 2rem;
+  gap: 1rem;
 `
 
 const CloseButton = styled(ButtonIcon)`

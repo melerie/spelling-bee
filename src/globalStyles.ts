@@ -14,6 +14,10 @@ ${({ theme }) => css`
     padding: 0;
   }
 
+  ul {
+    list-style: none;
+  }
+
   body {
     font-family: 'Poppins', sans-serif;
     color: ${theme.textColour};

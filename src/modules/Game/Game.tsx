@@ -1,34 +1,29 @@
 import { useState } from 'react'
 import { styled } from 'styled-components'
 
-import { StorageValue, StorageValueFunction } from '../../hooks'
 import { Hexagons, Shuffle, SpellingInput } from './components'
 import { Button } from '../../components'
-import { SpellingBeeValues } from '../../types'
 import { verifySubmittedValue } from './verifySubmittedValue'
 import { useToast } from './useToast'
+import { useSpellingBee } from '../../context'
 
-type Props = {
-  storedValue: SpellingBeeValues | undefined
-  setLocalStorageValue: (value: StorageValue<SpellingBeeValues> | StorageValueFunction<SpellingBeeValues>) => void
-}
-
-export const Game = ({ storedValue, setLocalStorageValue }: Props) => {
+export const Game = () => {
   const [inputLetters, setInputLetters] = useState<string>()
   const { setToast, Toast } = useToast()
+  const { setGameData, gameData } = useSpellingBee()
 
-  if (!storedValue) {
+  if (!gameData) {
     return <p>Error loading app</p>
   }
 
-  const { hiveLetters, centerLetter, answersWithScore, foundAnswers } = storedValue
+  const { hiveLetters, centerLetter, answersWithScore, foundAnswers } = gameData
 
   const handleDelete = () => {
     setInputLetters((letters) => letters?.slice(0, -1))
   }
 
   const handleShuffle = () => {
-    setLocalStorageValue((value) => {
+    setGameData((value) => {
       if (!value) return
       return {
         ...value,
@@ -65,7 +60,7 @@ export const Game = ({ storedValue, setLocalStorageValue }: Props) => {
       return
     }
 
-    setLocalStorageValue((value) => {
+    setGameData((value) => {
       if (!value) return
       return {
         ...value,

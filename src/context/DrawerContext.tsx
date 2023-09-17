@@ -1,4 +1,15 @@
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useMemo, useState } from 'react'
+import {
+  Dispatch,
+  ReactElement,
+  ReactNode,
+  SetStateAction,
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react'
+import { Drawer, DrawerSettings, Drawers } from '../components'
 
 type Props = {
   children: ReactNode
@@ -7,16 +18,34 @@ type Props = {
 type DrawerProviderProps = {
   drawerIndex: number
   setDrawerIndex: Dispatch<SetStateAction<number>>
+  addDrawer: (drawerSettings: DrawerSettings) => void
+  drawers: ReactElement[]
 }
 
 export const DrawerContext = createContext<null | DrawerProviderProps>(null)
 
 export const DrawerProvider = ({ children }: Props) => {
   const [drawerIndex, setDrawerIndex] = useState(-1)
+  const [drawerArrs, setDrawerArrs] = useState<DrawerProviderProps['drawers']>([])
 
-  const memoizedContextValue = useMemo(() => ({ drawerIndex, setDrawerIndex }), [drawerIndex])
+  const addDrawer = useCallback(
+    (drawerSettings: DrawerSettings) => {
+      setDrawerArrs((drawers) => [...drawers, <Drawer {...drawerSettings} />])
+    },
+    [setDrawerArrs]
+  )
 
-  return <DrawerContext.Provider value={memoizedContextValue}>{children}</DrawerContext.Provider>
+  const memoizedContextValue = useMemo(
+    () => ({ drawerIndex, setDrawerIndex, addDrawer, drawers: drawerArrs }),
+    [addDrawer, drawerIndex, drawerArrs]
+  )
+
+  return (
+    <DrawerContext.Provider value={memoizedContextValue}>
+      {children}
+      <Drawers />
+    </DrawerContext.Provider>
+  )
 }
 
 export const useDrawer = () => {

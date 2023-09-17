@@ -1,14 +1,13 @@
-import { ReactNode, useEffect } from 'react'
-import styled, { ThemeProvider } from 'styled-components'
+import { ReactNode } from 'react'
+import styled from 'styled-components'
 
-import { Game } from './modules/Game'
-import { theme } from './theme'
+import { Game, DrawerMenus } from './modules'
 import { GlobalStyle } from './globalStyles'
-import { Drawer, Footer, Header } from './components'
+import { Footer, Header } from './components'
 import { useFetchData, useLocalStorage } from './hooks'
 import { SpellingBeeValues, WordsList } from './types'
 import { getHiveGameData } from './utils'
-import { DrawerProvider } from './context'
+import { useSpellingBee } from './context'
 
 type ContentProps = {
   error: Error | undefined
@@ -17,42 +16,29 @@ type ContentProps = {
 }
 
 export const App = () => {
-  const { storedValue, setLocalStorageValue } = useLocalStorage<SpellingBeeValues>({ key: 'spellingBee' })
-  const { data, error, loading } = useFetchData<WordsList>({ url: '/words.json', skip: !!storedValue })
-
-  useEffect(() => {
-    if (!data) {
-      return
-    }
-
-    const gameData = getHiveGameData(data)
-    setLocalStorageValue(gameData)
-
-    // We only want to run this once, when the data is loaded
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+  const { storedValue } = useLocalStorage<SpellingBeeValues>({ key: 'spellingBee' })
+  const { gameData, setGameData } = useSpellingBee()
+  const { error, loading } = useFetchData<WordsList>({
+    url: '/words.json',
+    skip: !!storedValue && !!gameData,
+    onComplete: (data) => {
+      const gameData = getHiveGameData(data)
+      setGameData(gameData)
+    },
+  })
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <GlobalStyle />
+      <DrawerMenus />
       <Container>
         <Header />
         <Content error={error} loading={loading}>
-          <Game storedValue={storedValue} setLocalStorageValue={setLocalStorageValue} />
+          <Game />
         </Content>
         <Footer />
       </Container>
-      <DrawerProvider>
-        <>
-          <Drawer index={0} buttonText="Word list">
-            One
-          </Drawer>
-          <Drawer index={1} buttonText="Reset">
-            Two
-          </Drawer>
-        </>
-      </DrawerProvider>
-    </ThemeProvider>
+    </>
   )
 }
 
