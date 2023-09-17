@@ -32,11 +32,14 @@ const Content = styled.div`
 `
 
 const Ul = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
   list-style: disc;
   padding-left: 1.5rem;
+  gap: 0.5rem;
 `
 
 const Li = styled.li`
-  margin-bottom: 0.5rem;
   text-transform: uppercase;
 `

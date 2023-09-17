@@ -54,6 +54,7 @@ const ErrorMessage = styled.p<{ state: TransitionStatus; $type: ToastType }>`
     color: ${theme[$type]};
     min-height: 1.6em;
     transition: opacity 300ms ease-in-out;
+    font-size: 0.8rem;
     opacity: 0;
 
     ${(state === 'entering' || state === 'entered') &&

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { styled } from 'styled-components'
 
-import { Hexagons, Shuffle, SpellingInput } from './components'
+import { Hexagons, Score, Shuffle, SpellingInput } from './components'
 import { Button } from '../../components'
 import { verifySubmittedValue } from './verifySubmittedValue'
 import { useToast } from './useToast'
@@ -73,9 +73,12 @@ export const Game = () => {
 
   return (
     <Container>
-      {Toast}
-      <SpellingInput letters={inputLetters} centerLetter={centerLetter} handleDelete={handleDelete} />
-      <Hexagons setInputLetters={setInputLetters} hiveLetters={hiveLetters} centerLetter={centerLetter} />
+      <InnerContainer>
+        <Score />
+        {Toast}
+        <SpellingInput letters={inputLetters} centerLetter={centerLetter} handleDelete={handleDelete} />
+        <Hexagons setInputLetters={setInputLetters} hiveLetters={hiveLetters} centerLetter={centerLetter} />
+      </InnerContainer>
       <Inline>
         <Button onClick={() => setInputLetters('')}>Clear</Button>
         <RoundButton onClick={handleShuffle}>
@@ -96,6 +99,14 @@ const Container = styled.main`
   width: 100%;
   padding: 20px;
   max-width: 1400px;
+`
+
+const InnerContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
 `
 
 const Inline = styled.div`
