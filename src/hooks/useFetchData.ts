@@ -39,7 +39,6 @@ const fetchData = async <T extends Data>(
   try {
     const response = await fetch(url)
     const jsonData: T = await response.json()
-    console.log('run once')
     setData(jsonData)
     onComplete?.(jsonData)
   } catch (err) {

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { Game, DrawerMenus } from './modules'
@@ -17,15 +17,24 @@ type ContentProps = {
 
 export const App = () => {
   const { storedValue } = useLocalStorage<SpellingBeeValues>({ key: 'spellingBee' })
-  const { gameData, setGameData } = useSpellingBee()
+  const { setGameData } = useSpellingBee()
   const { error, loading } = useFetchData<WordsList>({
     url: '/words.json',
-    skip: !!storedValue && !!gameData,
+    skip: !!storedValue,
     onComplete: (data) => {
       const gameData = getHiveGameData(data)
       setGameData(gameData)
     },
   })
+
+  useEffect(() => {
+    if (storedValue) {
+      setGameData(storedValue)
+    }
+    // We don't want to run this effect when the storedValue changes
+    // It should only run once on mount to set the gameData from localStorage
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
